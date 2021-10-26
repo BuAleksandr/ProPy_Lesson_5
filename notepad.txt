@@ -1,0 +1,4 @@
+Путь к файлу с логами C:\Users\BuniN\Desktop\Учеба по PY\ProPy\Lesson_5\notepad.txt
+2021-10-27 00:38:51.504920
+Вызвана функция Country_Iterator
+с аргументами ('C:\\Users\\BuniN\\Desktop\\Учеба по PY\\ProPy\\Lesson_5\\countries.json',) {}
