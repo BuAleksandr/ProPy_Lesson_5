@@ -4,8 +4,6 @@ import json
 from pprint import pprint
 import hashlib
 
-file_txt = os.path.join(os.getcwd(), "notepad.txt")
-
 
 def parametrized_decor(random_file):
     def logger(foo):
@@ -13,6 +11,7 @@ def parametrized_decor(random_file):
             with open("notepad.txt", "r", encoding="utf-8") as f:
                 result_func = foo(*args, **kwargs)
                 with open("notepad.txt", "w", encoding="utf-8") as f:
+                    file_txt = os.path.join(os.getcwd(), "notepad.txt")
                     now = datetime.datetime.now()
                     f.write(f'Путь к файлу с логами {random_file}\n')
                     f.write(f'{str(now)}\n')
