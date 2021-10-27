@@ -4,24 +4,32 @@ import json
 from pprint import pprint
 import hashlib
 
-
-def logger(old_func):
-    def func(*args, **kwargs):
-        with open("notepad.txt", "r", encoding="utf-8") as f:
-            result_func = old_func(*args, **kwargs)
-            with open("notepad.txt", "w", encoding="utf-8") as f:
-                file_txt = os.path.join(os.getcwd(), "notepad.txt")
-                now = datetime.datetime.now()
-                f.write(f'Путь к файлу с логами {file_txt}\n')
-                f.write(f'{str(now)}\n')
-                f.write(f"Вызвана функция {old_func.__name__}\n")
-                f.write(f"с аргументами {args} {kwargs}\n")
-            return result_func
-
-    return func
+file_txt = os.path.join(os.getcwd(), "notepad.txt")
 
 
-@logger
+def parametrized_decor(random_file):
+    def logger(foo):
+        def func(*args, **kwargs):
+            with open("notepad.txt", "r", encoding="utf-8") as f:
+                result_func = foo(*args, **kwargs)
+                with open("notepad.txt", "w", encoding="utf-8") as f:
+                    now = datetime.datetime.now()
+                    f.write(f'Путь к файлу с логами {random_file}\n')
+                    f.write(f'{str(now)}\n')
+                    f.write(f"Вызвана функция {foo.__name__}\n")
+                    f.write(f"с аргументами {args} {kwargs}\n")
+                return result_func
+
+        return func
+
+    return logger
+
+
+@parametrized_decor
+def old_func():
+    pass
+
+
 class Country_Iterator:
     def __init__(self, json_file):
         with open(file_json, 'r') as file:
@@ -53,3 +61,4 @@ if __name__ == '__main__':
         pprint(f'Город {name_country} - {name_fix}')
         hash_object = hashlib.md5(b'{name_fix}')
         print(hash_object.hexdigest())
+
